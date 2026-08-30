@@ -1,0 +1,67 @@
+[
+  {
+    "model": "catalog.product",
+    "pk": 1,
+    "fields": {
+      "name": "iPhone 15",
+      "description": "Самый новый смартфон от Apple",
+      "image": "",
+      "category": 1,
+      "price": "999.99",
+      "created_at": "2026-08-30T17:00:00Z",
+      "updated_at": "2026-08-30T17:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 2,
+    "fields": {
+      "name": "Ноутбук Dell XPS",
+      "description": "Мощный ноутбук для работы",
+      "image": "",
+      "category": 1,
+      "price": "1499.99",
+      "created_at": "2026-08-30T17:00:00Z",
+      "updated_at": "2026-08-30T17:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 3,
+    "fields": {
+      "name": "Футболка Nike",
+      "description": "Хлопковая футболка с логотипом",
+      "image": "",
+      "category": 2,
+      "price": "29.99",
+      "created_at": "2026-08-30T17:00:00Z",
+      "updated_at": "2026-08-30T17:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 4,
+    "fields": {
+      "name": "Джинсы Levi's",
+      "description": "Классические синие джинсы",
+      "image": "",
+      "category": 2,
+      "price": "89.99",
+      "created_at": "2026-08-30T17:00:00Z",
+      "updated_at": "2026-08-30T17:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 5,
+    "fields": {
+      "name": "Война и мир",
+      "description": "Роман Льва Толстого",
+      "image": "",
+      "category": 3,
+      "price": "19.99",
+      "created_at": "2026-08-30T17:00:00Z",
+      "updated_at": "2026-08-30T17:00:00Z"
+    }
+  }
+]
