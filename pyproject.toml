@@ -9,7 +9,6 @@ exclude = [
     "fixtures/",
     "screenshots/"
 ]
-ignore_missing_imports = true
 
 [tool.mypy.plugins.django-stubs]
 django_settings_module = "config.settings"
