@@ -1,47 +1,53 @@
-# from catalog.models import Product
-# from django.shortcuts import get_object_or_404, render
-#
-#
-# def home(request):
-#     """Главная страница — список всех товаров"""
-#     products = Product.objects.all()
-#     context = {'products': products}
-#     return render(request, 'catalog/home.html', context)
-#
-#
-# def contacts(request):
-#     """Страница контактов"""
-#     return render(request, 'catalog/contacts.html')
-#
-#
-# # НОВЫЙ КОНТРОЛЛЕР ДЛЯ СТРАНИЦЫ ТОВАРА
-# def product_detail(request, pk):
-#     """
-#     Страница с подробной информацией о товаре.
-#     Получает pk (первичный ключ) из URL, находит товар в БД,
-#     если не найден — возвращает 404.
-#     """
-#     product = get_object_or_404(Product, pk=pk)
-#     context = {'product': product}
-#     return render(request, 'catalog/product_detail.html', context)
-
-from django.views.generic import ListView, TemplateView, DetailView
+from catalog.forms import ProductForm
 from catalog.models import Product
+from django.urls import reverse_lazy
+from django.views.generic import CreateView, DeleteView, DetailView, ListView, TemplateView, UpdateView
+
 
 class ProductListView(ListView):
-    """Главная страница — список всех товаров."""
+    """Главная страница — список всех товаров"""
+
     model = Product
-    template_name = 'catalog/home.html'
-    context_object_name = 'products'
+    template_name = "catalog/home.html"
+    context_object_name = "products"
 
 
 class ProductDetailView(DetailView):
-    """Страница с подробной информацией о товаре."""
+    """Страница с подробной информацией о товаре"""
+
     model = Product
-    template_name = 'catalog/product_detail.html'
-    context_object_name = 'product'
+    template_name = "catalog/product_detail.html"
+    context_object_name = "product"
 
 
 class ContactsView(TemplateView):
-    """Страница контактов."""
-    template_name = 'catalog/contacts.html'
+    """Страница контактов"""
+
+    template_name = "catalog/contacts.html"
+
+
+# CRUD для продуктов
+class ProductCreateView(CreateView):
+    """Создание продукта"""
+
+    model = Product
+    form_class = ProductForm
+    template_name = "catalog/product_form.html"
+    success_url = reverse_lazy("catalog:home")
+
+
+class ProductUpdateView(UpdateView):
+    """Редактирование продукта"""
+
+    model = Product
+    form_class = ProductForm
+    template_name = "catalog/product_form.html"
+    success_url = reverse_lazy("catalog:home")
+
+
+class ProductDeleteView(DeleteView):
+    """Удаление продукта"""
+
+    model = Product
+    template_name = "catalog/product_confirm_delete.html"
+    success_url = reverse_lazy("catalog:home")
