@@ -19,7 +19,7 @@ class ProductForm(forms.ModelForm):
 
     class Meta:
         model = Product
-        fields = ["name", "description", "image", "category", "price"]
+        fields = ["name", "description", "image", "category", "price", "is_published"]
 
     def __init__(self, *args, **kwargs):
         """Стилизация формы под Bootstrap"""

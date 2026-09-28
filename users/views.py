@@ -1,11 +1,10 @@
+from django.conf import settings
 from django.contrib.auth import login
 from django.contrib.auth.views import LoginView, LogoutView
 from django.core.mail import send_mail
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
-from django.conf import settings
-
-from users.forms import UserRegisterForm, UserLoginForm
+from users.forms import UserLoginForm, UserRegisterForm
 
 
 class UserRegisterView(CreateView):
