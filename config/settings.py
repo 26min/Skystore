@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "catalog",
     "blog",
+    "users",
 ]
 
 MIDDLEWARE = [
@@ -140,3 +141,11 @@ MAILERS = {
 # Настройки для загрузки изображений
 MEDIA_URL = "/media/"  # URL, по которому будут доступны медиафайлы
 MEDIA_ROOT = BASE_DIR / "media"  # Папка на диске, где хранятся медиафайлы
+
+AUTH_USER_MODEL = "users.User"
+
+MAILERS = {
+    "default": {
+        "BACKEND": "django.core.mail.backends.console.EmailBackend",
+    },
+}
