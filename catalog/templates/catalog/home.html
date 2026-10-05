@@ -22,7 +22,7 @@
             <div class="card h-100 shadow-sm">
 
                 {% if product.image %}
-                    <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}" style="height: 200px; object-fit: cover;">
+                    <img src="/media/{{ product.image }}" class="card-img-top" alt="{{ product.name }}" style="height: 200px; object-fit: cover;">
                 {% else %}
                     <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Нет фото">
                 {% endif %}
@@ -34,15 +34,15 @@
 
                     <!-- КНОПКИ УПРАВЛЕНИЯ -->
                     <div class="d-flex gap-2 mt-auto">
-                        <a href="{% url 'catalog:product_detail' pk=product.pk %}" class="btn btn-outline-primary btn-sm">
+                        <a href="{% url 'catalog:product_detail' pk=product.id %}" class="btn btn-outline-primary btn-sm">
                             Подробнее
                         </a>
 
-                        {% if user == product.owner or perms.catalog.delete_product %}
-                            <a href="{% url 'catalog:product_update' pk=product.pk %}" class="btn btn-outline-secondary btn-sm" title="Редактировать">
+                        {% if user.id == product.owner_id or perms.catalog.delete_product %}
+                            <a href="{% url 'catalog:product_update' pk=product.id %}" class="btn btn-outline-secondary btn-sm" title="Редактировать">
                                 ✏️
                             </a>
-                            <a href="{% url 'catalog:product_delete' pk=product.pk %}" class="btn btn-outline-danger btn-sm" title="Удалить">
+                            <a href="{% url 'catalog:product_delete' pk=product.id %}" class="btn btn-outline-danger btn-sm" title="Удалить">
                                 🗑️
                             </a>
                         {% endif %}

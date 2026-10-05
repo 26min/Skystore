@@ -1,28 +1,35 @@
 from catalog.forms import ProductForm
-from catalog.models import Product
+from catalog.models import Category, Product
+from catalog.services import get_all_products, get_products_by_category
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, TemplateView, UpdateView
 
 
 class ProductListView(ListView):
-    """Главная — доступна всем"""
+    """Главная — доступна всем, кэшируется через сервис"""
 
     model = Product
     template_name = "catalog/home.html"
     context_object_name = "products"
 
     def get_queryset(self):
-        """Показываем только опубликованные товары"""
         return Product.objects.filter(is_published=True)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["products"] = get_all_products()
+        return context
 
-class ProductDetailView(DetailView):
-    """Детали — доступна всем"""
 
-    model = Product
-    template_name = "catalog/product_detail.html"
-    context_object_name = "product"
+# class ProductDetailView(DetailView):
+#     """Детали — доступна всем"""
+#
+#     model = Product
+#     template_name = "catalog/product_detail.html"
+#     context_object_name = "product"
 
 
 class ContactsView(TemplateView):
@@ -75,3 +82,27 @@ class ProductDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         is_owner = product.owner == self.request.user
         is_moderator = self.request.user.has_perm("catalog.delete_product")
         return is_owner or is_moderator
+
+
+@method_decorator(cache_page(60 * 15), name="dispatch")
+class ProductDetailView(DetailView):
+    """Детали товара — кэшируется на 15 минут"""
+
+    model = Product
+    template_name = "catalog/product_detail.html"
+    context_object_name = "product"
+
+
+class CategoryProductsView(DetailView):
+    """Страница со списком продуктов в категории"""
+
+    model = Category
+    template_name = "catalog/category_products.html"
+    context_object_name = "category"
+
+    def get_context_data(self, **kwargs):
+        """Добавляем список продуктов из сервиса"""
+        context = super().get_context_data(**kwargs)
+        category_id = self.kwargs.get("pk")
+        context["products"] = get_products_by_category(category_id)
+        return context
